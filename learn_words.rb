@@ -67,7 +67,7 @@ while true
   d = 0.25
   word_prev = word
   word = local_words.find { |x| x.favour <= (min_favour + d) }
-  while word == word_prev
+  while word == word_prev && local_words.count > 1
     local_words = local_words.sort_by { rand }
     d += 0.25
     word = local_words.find { |x| x.favour <= (min_favour + d) }
