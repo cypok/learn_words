@@ -82,7 +82,7 @@ while true
   if word.asked(ans)
     say %{< #{word.times_answered}/#{word.times_asked}\t<%= color('ok!', GREEN) %>}
   else
-    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right was "#{word.trans}"], RED+UNDERLINE) %>!}
+    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right was "#{word.trans}"], BOLD+RED+UNDERLINE) %>!}
   end
   STDOUT.write "\n"
 end
