@@ -9,12 +9,13 @@ if ARGV.size < 1 or ARGV.size > 2
 end
 
 class Word
-  attr_reader :orig, :trans
+  attr_reader :orig, :trans, :variants_number
   attr_accessor :times_asked, :times_answered
 
   def initialize(orig, trans)
     @orig = orig
-    @trans = trans
+    @trans = trans.split "/"
+    @variants_number = @trans.length
     @times_asked = 0
     @times_answered = 0
   end
@@ -27,8 +28,8 @@ class Word
     end
   end
 
-  def asked(answered)
-    right = answered.downcase == trans.downcase
+  def asked(answers)
+    right = ( answers.map( &:downcase ).sort == trans.map( &:downcase ).sort )
     @times_asked += 1
     @times_answered += 1 if right
     right
@@ -48,14 +49,20 @@ end
 
 LIMIT = (ARGV[1] || 3).to_i
 
-say %{<%= color('<<<    Welcome to WordLearner !   >>>', GREEN+UNDERLINE) %>}
-say %{<%= color('made by Vladimir Parfinenko aka cypok', GREEN) %>}
+say %{<%= color('<<<      Welcome to WordLearner !     >>>', GREEN+UNDERLINE) %>}
+say %{<%= color('  made by Vladimir Parfinenko aka cypok  ', GREEN) %>}
+say %{<%= color('   some fixes by Ivan Novikov aka NIA  ', GREEN) %>}
 STDOUT.write "\n"
 say %{Current limit of learning is set to #{LIMIT}}
+STDOUT.write "\n"
+say %{Note: if there are more than one variant,}
+say %{separate them by "/" or enter one by one}
 say %{Type "exit" if you want to quit}
 STDOUT.write "\n"
+say %{<%= color('Total #{words.length} words to learn', BLUE) %>}
+STDOUT.write "\n"
 
-ans = ""
+answers = []
 word = nil
 while true
   local_words = words.sort_by { rand }.find_all { |x| x.times_answered < LIMIT }
@@ -67,22 +74,34 @@ while true
   d = 0.25
   word_prev = word
   word = local_words.find { |x| x.favour <= (min_favour + d) }
-  while word == word_prev
+  while word == word_prev && local_words.count > 1
     local_words = local_words.sort_by { rand }
     d += 0.25
     word = local_words.find { |x| x.favour <= (min_favour + d) }
   end
 
-  say %{< <%= color(%q[#{word.orig}], YELLOW) %>}
-  STDOUT.write "> "
-  ans = STDIN.readline.strip
+  variants_msg = word.variants_number == 1 ? "" : " (#{word.variants_number} variants)" 
+  say %{< <%= color(%q[#{word.orig}], YELLOW) %>#{variants_msg}}
+  
+  answers = []
+  begin
+    while answers.length < word.variants_number and not answers.include? "exit"
+      STDOUT.write "> "
+      answers += STDIN.readline.split( "/" ).map( &:strip )
+      break if answers.include? ""
+    end
+  rescue EOFError, Interrupt
+    break
+  end
 
-  break if ans == "exit"
+  break if answers.include? "exit"
 
-  if word.asked(ans)
+  if word.asked(answers)
     say %{< #{word.times_answered}/#{word.times_asked}\t<%= color('ok!', GREEN) %>}
   else
-    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right was "#{word.trans}"], RED+UNDERLINE) %>!}
+    right_string = ( word.variants_number != 1 ) ? "were " : "was "
+    right_string += word.trans.map{|t| %{"#{t}"} }.join ", "
+    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right #{right_string}!], BOLD+RED+UNDERLINE) %>}
   end
   STDOUT.write "\n"
 end
@@ -97,6 +116,5 @@ words = words.sort do |x, y|
   end
 end
 words.each do |word|
-  say %{<%= color(%q[#{(word.frequency*100).to_i.to_s.rjust(3)}% #{word.times_answered}/#{word.times_asked}  #{word.trans.ljust(28, " ")}#{word.orig}], BLUE) %>}
+  say %{<%= color(%q[#{(word.frequency*100).to_i.to_s.rjust(3)}% #{word.times_answered}/#{word.times_asked}  #{word.trans.join("/").ljust(28, " ")}#{word.orig}], BLUE) %>}
 end
-

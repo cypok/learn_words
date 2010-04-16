@@ -1,4 +1,6 @@
   Usage: learn_words.rb FILE [LEARNING_LIMIT]
 
   FILE format:
-    any number of lines with two words separated by <Tab>
+    any number of lines with two words separated by <Tab>.
+    Note: if there are more than one variant for
+          translation, separate them by "/"
