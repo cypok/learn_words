@@ -99,9 +99,9 @@ while true
   if word.asked(answers)
     say %{< #{word.times_answered}/#{word.times_asked}\t<%= color('ok!', GREEN) %>}
   else
-    right_string = ( word.variants_number != 1 ) ? "were " : "was "
-    right_string += word.trans.map{|t| %{"#{t}"} }.join ", "
-    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right #{right_string}!], BOLD+RED+UNDERLINE) %>}
+    verb = ( word.variants_number != 1 ) ? "were" : "was"
+    right_strings = word.trans.map{|t| '"'+t+'"' }.join ", "
+    say %{< #{word.times_answered}/#{word.times_asked}\t<%= color(%q[WRONG! Right #{verb} #{right_strings}!], BOLD+RED+UNDERLINE) %>}
   end
   STDOUT.write "\n"
 end
