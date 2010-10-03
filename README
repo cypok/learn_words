@@ -1,4 +1,4 @@
-  Usage: learn_words.rb FILE [LEARNING_LIMIT]
+  Usage: learn_words FILE [--limit N] [--part N/M]
 
   FILE format:
     any number of lines with two words separated by <Tab>.
