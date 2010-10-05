@@ -1,4 +1,4 @@
-  Usage: learn_words FILE [--limit N] [--part N/M]
+  Usage: learn_words FILE [--limit N] [--part M/K]
 
   FILE format:
     any number of lines with two words separated by <Tab>.

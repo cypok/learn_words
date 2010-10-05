@@ -10,7 +10,7 @@ require 'highline/import'
 # TODO: use optparser !!!
 
 USAGE = <<-STR
-Usage: learn_words FILE [--limit N] [--part N/M]
+Usage: learn_words FILE [--limit N] [--part M/K]
 STR
 
 def exit_with_usage(str = nil)
@@ -196,6 +196,9 @@ words = words.sort do |x, y|
     -( x.frequency <=> y.frequency )
   end
 end
+max_trans_length = words.map {|w| w.trans.join('/').length }.max
 words.each do |word|
-  say %{<%= color(%q[#{(word.frequency*100).to_i.to_s.rjust(3)}% #{word.times_answered}/#{word.times_asked}  #{word.trans.join("/").ljust(28, " ")}#{word.orig}], BLUE) %>}
+  freq = (word.frequency*100).to_i.to_s.rjust(3)
+  trans = word.trans.join('/').ljust(max_trans_length, ' ')
+  say %{<%= color(%q[#{freq}%  #{word.times_answered}/#{word.times_asked}   #{trans}  #{word.orig}], BLUE) %>}
 end
