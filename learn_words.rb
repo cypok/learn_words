@@ -132,13 +132,13 @@ say %{ <%= color('             Learn Words !           ', GREEN+UNDERLINE) %>}
 say %{ <%= color('made by Vladimir Parfinenko aka cypok', GREEN) %>}
 say %{ <%= color(' some fixes by Ivan Novikov aka NIA  ', GREEN) %>}
 STDOUT.write "\n"
-say %{Current limit of learning is set to #{limit}}
-STDOUT.write "\n"
 say %{Note: if there are more than one variant,}
 say %{separate them by "/" or enter one by one}
 STDOUT.write "\n"
-say %{Type "!" to mark as learnt, "exit" to quit}
+say %{Type "?" to get stats, "!" to mark as learnt}
+say %{and "exit" to quit}
 STDOUT.write "\n"
+say %{<%= color('Current limit of learning is set to #{limit}', BLUE) %>}
 say %{<%= color('Total #{total_words_count} words to learn', BLUE) %>}
 if parts_count != 1
   say %{<%= color('Part #{part} of #{parts_count}: #{words.count} words to learn', BLUE) %>}
@@ -176,7 +176,7 @@ while true
       STDOUT.write "> "
       answers += STDIN.readline.split( "/" ).map( &:strip )
 
-      break if ['', 'exit', '!'].any? {|s| answers.include? s }
+      break if ['', 'exit', '!', '?'].any? {|s| answers.include? s }
     end
     break if answers.include? "exit"
 
@@ -189,6 +189,12 @@ while true
       else
         say %{< #{word.times_answered}/#{word.times_asked}}
       end
+    elsif answers.include? "?"
+      total_to_answer  = words.map {|w| w.limit }.reduce(&:+)
+      already_answered = words.map {|w| w.times_answered }.reduce(&:+)
+
+      say %{< Already answered #{already_answered} times correctly}
+      say %{< There will be #{total_to_answer-already_answered} questions more}
     else
       if word.asked(answers)
         say %{< #{word.times_answered}/#{word.times_asked}\t<%= color('OK!', GREEN) %>}
