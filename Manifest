@@ -1,0 +1,6 @@
+MIT-LICENSE
+Manifest
+README
+Rakefile
+bin/learn_words
+lib/learn_words.rb
