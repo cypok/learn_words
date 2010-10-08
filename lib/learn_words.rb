@@ -135,7 +135,7 @@ class LearnWords
     say %{ <%= color('             Learn Words !           ', GREEN+UNDERLINE) %>}
     say %{ <%= color('made by Vladimir Parfinenko aka cypok', GREEN) %>}
     say %{ <%= color(' some fixes by Ivan Novikov aka NIA  ', GREEN) %>}
-    say %{ <%= color('             version 0.1.0           ', GREEN) %>}
+    say %{ <%= color('             version 0.1.1           ', GREEN) %>}
     STDOUT.write "\n"
     say %{Note: if there are more than one variant,}
     say %{separate them by "/" or enter one by one}
