@@ -1,22 +1,21 @@
-  About
-  =====
+  === About
   Simple application that helps you learn foreign words.
 
-  Installation
-  ============
+  === Installation
   Installation process is quite simple (notice, that ruby could be already installed)
 
   * install ruby from http://www.ruby-lang.org/en/downloads/
 
   * install rubygems from http://rubygems.org/pages/download
 
-  * execute "gem install learn_words" to install application itself
+  * execute
+        gem install learn_words
+    to install application itself
 
-  Usage
-  =====
-  To use this application you need to have a file in special format:
+  === Words file
+  To use this application you need to have a file in a special format:
 
-  * any number of lines with foreign word and it's translation separated by <Tab>
+  * any number of lines with foreign word and it's translation separated by <tt><Tab></tt>
 
   * if there are more than one variant for foreign word, separate them by "/"
 
@@ -27,12 +26,19 @@
       # some comments
       city/town   город
 
-  Next execute "learn_words /path/to/file/with/words" to start learning words.
-  And there are two options:
+  === Usage
+  Now execute
+      learn_words /path/to/file/with/words
+  to start learning words. There are two options:
 
-  * --limit N - used for setting limit of words learning,
+  * <tt>--limit N</tt> - used for setting limit of words learning,
     you would be asked while you answer N times correctly
 
-  * --part M/K - used for splitting big lists of words into parts,
+  * <tt>--part M/K</tt> - used for splitting big lists of words into parts,
     K - total number of parts, M - index of part to learn (1 <= M <= K)
+
+  While learning words you can use 3 commands:
+  * <tt>exit</tt> - to quit (or <tt>^C</tt>, or <tt>^D</tt>)
+  * <tt>?</tt> - to get stats (how many learned, how many to learn)
+  * <tt>!</tt> - to mark the word as learnt (or ban it)
 
