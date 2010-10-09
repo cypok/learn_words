@@ -4,7 +4,7 @@
   === Installation
   Installation process is quite simple (notice, that ruby could be already installed)
 
-  * install ruby from http://www.ruby-lang.org/en/downloads/
+  * install ruby from http://www.ruby-lang.org/en/downloads
 
   * install rubygems from http://rubygems.org/pages/download
 
@@ -15,7 +15,7 @@
   === Words file
   To use this application you need to have a file in a special format:
 
-  * any number of lines with foreign word and it's translation separated by <tt><Tab></tt>
+  * any number of lines with foreign word and it's translation separated by <tt><Tab></tt> or two or more spaces
 
   * if there are more than one variant for foreign word, separate them by "/"
 

@@ -103,9 +103,14 @@ class LearnWords
     begin
       open(words_file) do |file|
         file.lines.each do |line|
-          next if line.strip.empty? # pass blank lines
-          parts = line.split( "\t" ).map{ |x| x.strip }.delete_if{ |x| x.empty? }
-          words << Word.new( parts[1], parts[0], limit ) unless line.start_with? '#'
+          # pass blank lines
+          next if line.strip.empty? or line.strip.start_with? '#'
+
+          # split into two parts by first tab or double space
+          parts = line.split( /\t| {2,}/, 2 ).map(&:strip)
+          next if parts.count < 2
+
+          words << Word.new( parts[1], parts[0], limit )
         end
       end
     rescue Exception => e
@@ -135,7 +140,7 @@ class LearnWords
     say %{ <%= color('             Learn Words !           ', GREEN+UNDERLINE) %>}
     say %{ <%= color('made by Vladimir Parfinenko aka cypok', GREEN) %>}
     say %{ <%= color(' some fixes by Ivan Novikov aka NIA  ', GREEN) %>}
-    say %{ <%= color('             version 0.1.1           ', GREEN) %>}
+    say %{ <%= color('             version 0.1.2           ', GREEN) %>}
     STDOUT.write "\n"
     say %{Note: if there are more than one variant,}
     say %{separate them by "/" or enter one by one}

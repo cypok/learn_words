@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('learn_words', '0.1.1') do |p|
+Echoe.new('learn_words', '0.1.2') do |p|
   p.description    = "Simple script for learning foreign language words"
   p.url            = "http://github.com/cypok/learn_words"
   p.author         = "Vladimir Parfinenko"

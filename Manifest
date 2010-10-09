@@ -1,6 +1,6 @@
 MIT-LICENSE
 Manifest
-README
+README.rdoc
 Rakefile
 bin/learn_words
 lib/learn_words.rb
